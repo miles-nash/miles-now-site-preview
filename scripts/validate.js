@@ -1,10 +1,11 @@
 const fs = require('fs');
 const html = fs.readFileSync('index.html', 'utf8');
 const required = [
-  'Embodied systems engineer',
-  'hardware, firmware, autonomy, AI',
+  'systems engineer with receipts',
+  'firmware systems engineer at Matic Robotics',
+  'Tesla wireless systems',
   'GBrain',
-  'Systems investigations',
+  'How I work',
   'public-safe'
 ];
 for (const marker of required) {
