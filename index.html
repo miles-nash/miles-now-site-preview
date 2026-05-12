@@ -189,6 +189,100 @@
     .aside-meta b { display: block; color: var(--ink); font-size: 12px; margin-bottom: 0.35rem; letter-spacing: 0.04em; text-transform: uppercase; }
     .aside-meta span { display: block; border-top: 1px solid var(--border-soft); padding-top: 0.45rem; margin-top: 0.45rem; }
 
+
+
+    .signal-lab {
+      margin-top: 1.4rem;
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 1rem;
+      align-items: stretch;
+    }
+    .map-panel, .inspector-panel {
+      position: relative;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.58);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .map-panel { min-height: 340px; padding: 1rem; }
+    .map-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(0deg, rgba(199,195,184,0.38) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(199,195,184,0.38) 1px, transparent 1px);
+      background-size: 16px 16px;
+      mask-image: radial-gradient(circle at 50% 50%, black, transparent 76%);
+      pointer-events: none;
+    }
+    .map-title {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--quiet);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .systems-map { position: relative; height: 270px; margin-top: 0.55rem; }
+    .map-line { position: absolute; height: 1px; background: color-mix(in oklab, var(--border) 65%, transparent); transform-origin: left center; }
+    .map-line.l1 { width: 164px; left: 115px; top: 74px; transform: rotate(21deg); }
+    .map-line.l2 { width: 184px; left: 258px; top: 112px; transform: rotate(-18deg); }
+    .map-line.l3 { width: 186px; left: 104px; top: 190px; transform: rotate(-28deg); }
+    .map-line.l4 { width: 190px; left: 258px; top: 145px; transform: rotate(25deg); }
+    .map-node {
+      position: absolute;
+      width: 132px;
+      min-height: 68px;
+      border: 1px solid var(--border);
+      background: color-mix(in oklab, var(--paper-2) 88%, white);
+      border-radius: 8px;
+      padding: 0.7rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+    .map-node:hover, .map-node.active { transform: translateY(-2px); border-color: var(--rust); background: #fff; }
+    .map-node b { display: block; font-size: 1rem; line-height: 1.05; font-weight: normal; color: var(--ink); }
+    .map-node span { display: block; margin-top: 0.35rem; font-family: var(--mono); font-size: 10px; color: var(--quiet); text-transform: uppercase; letter-spacing: 0.04em; }
+    .map-node.center { left: calc(50% - 74px); top: 94px; width: 148px; min-height: 82px; border-color: color-mix(in oklab, var(--rust) 45%, var(--border)); background: #fffdf8; }
+    .map-node.signal { left: 0; top: 26px; }
+    .map-node.control { right: 0; top: 36px; }
+    .map-node.agent { left: 26px; bottom: 16px; }
+    .map-node.output { right: 20px; bottom: 14px; }
+    .pulse-dot {
+      position: absolute;
+      left: calc(50% - 5px);
+      top: 128px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--rust);
+      box-shadow: 0 0 0 8px rgba(159,76,47,0.10), 0 0 24px rgba(159,76,47,0.35);
+      animation: breathe 2.8s ease-in-out infinite;
+    }
+    @keyframes breathe { 0%, 100% { transform: scale(0.92); opacity: 0.75; } 50% { transform: scale(1.18); opacity: 1; } }
+    .inspector-panel { padding: 1rem; }
+    .inspector-panel .eyebrow { margin-bottom: 0.8rem; }
+    .inspector-title { margin: 0; font-size: 1.45rem; line-height: 1.08; }
+    .inspector-copy { margin: 0.75rem 0 1rem; color: #333; }
+    .signal-buttons { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 1rem 0; }
+    .signal-button { border: 1px solid var(--border); background: var(--paper-2); border-radius: 999px; padding: 0.42rem 0.65rem; font-family: var(--mono); font-size: 11px; color: var(--muted); cursor: pointer; }
+    .signal-button.active, .signal-button:hover { color: var(--ink); border-color: var(--rust); background: #fff; }
+    .map-node:focus-visible, .signal-button:focus-visible, .chip-link:focus-visible, a:focus-visible { outline: 2px solid var(--rust); outline-offset: 3px; }
+    .inspector-metric { display: grid; grid-template-columns: 86px 1fr; gap: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border-soft); font-family: var(--mono); font-size: 11px; color: var(--quiet); text-transform: uppercase; letter-spacing: 0.04em; }
+    .inspector-metric span { font-family: var(--serif); font-size: 0.98rem; color: var(--ink); text-transform: none; letter-spacing: 0; }
+    .ticker { margin-top: 1rem; border: 1px solid var(--border-soft); border-radius: 999px; background: rgba(255,255,255,0.58); overflow: hidden; font-family: var(--mono); font-size: 11px; color: var(--muted); white-space: nowrap; }
+    .ticker-track { display: inline-block; padding: 0.48rem 0; animation: ticker 34s linear infinite; }
+    .ticker span { margin-right: 2.2rem; }
+    @keyframes ticker { from { transform: translateX(1%); } to { transform: translateX(-50%); } }
+
     section { margin-top: 3rem; }
     .section-heading {
       display: flex;
@@ -311,7 +405,7 @@
       .tagline, .telemetry { display: none; }
       .main-container { padding: 1.25em 1em 3em; }
       .top-nav { justify-content: flex-start; overflow-x: auto; padding-bottom: 2px; }
-      .hero-layout, .two-column, .investigation-board { grid-template-columns: 1fr; gap: 1.25rem; }
+      .hero-layout, .two-column, .investigation-board, .signal-lab { grid-template-columns: 1fr; gap: 1.25rem; }
       .portrait { width: 100%; height: 220px; }
       .thesis-strip { grid-template-columns: 1fr; }
       .thesis-cell { border-right: 0; border-bottom: 1px solid var(--border-soft); min-height: auto; }
@@ -321,6 +415,9 @@
       .section-heading p { margin-top: 0.6rem; }
       .field-note { grid-template-columns: 1fr; }
       .field-note b { border-right: 0; border-bottom: 1px solid var(--border-soft); }
+      .systems-map { height: 360px; }
+      .map-node { position: relative; left: auto !important; right: auto !important; top: auto !important; bottom: auto !important; width: 100%; margin-bottom: 0.6rem; }
+      .map-line, .pulse-dot { display: none; }
       footer { display: block; }
     }
 
@@ -330,8 +427,9 @@
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      .project-card, .chip-link, .mini-chip { transition: none; }
-      .project-card:hover { transform: none; }
+      .project-card, .chip-link, .mini-chip, .map-node { transition: none; }
+      .project-card:hover, .map-node:hover { transform: none; }
+      .ticker-track { animation: none; white-space: normal; padding-left: 0.75rem; }
     }
   </style>
 </head>
@@ -377,6 +475,39 @@
         </div>
       </div>
     </section>
+
+    <section class="signal-lab" aria-label="Interactive systems map">
+      <div class="map-panel">
+        <div class="map-title"><span>systems map / hover or tap nodes</span><span>clickable model</span></div>
+        <div class="systems-map">
+          <div class="map-line l1"></div><div class="map-line l2"></div><div class="map-line l3"></div><div class="map-line l4"></div><div class="pulse-dot"></div>
+          <button class="map-node signal active" type="button" data-signal="signal" aria-pressed="true"><b>physical signal</b><span>sensors · uncertainty</span></button>
+          <button class="map-node control" type="button" data-signal="control" aria-pressed="false"><b>control loop</b><span>firmware · autonomy</span></button>
+          <button class="map-node center" type="button" data-signal="thesis" aria-pressed="false"><b>systems taste</b><span>architect across seams</span></button>
+          <button class="map-node agent" type="button" data-signal="agent" aria-pressed="false"><b>AI leverage</b><span>GBrain · Hermes</span></button>
+          <button class="map-node output" type="button" data-signal="output" aria-pressed="false"><b>public artifact</b><span>demos · field notes</span></button>
+        </div>
+      </div>
+      <aside class="inspector-panel" aria-live="polite">
+        <p class="eyebrow">Selected node</p>
+        <h2 class="inspector-title" id="signal-title">Physical signal → useful interface</h2>
+        <p class="inspector-copy" id="signal-copy">The recurring pattern is sensing something real, noisy, or physical, then building enough software and interface around it that people can act.</p>
+        <div class="signal-buttons" aria-label="Signal filters">
+          <button class="signal-button active" type="button" data-signal="signal" aria-pressed="true">signal</button>
+          <button class="signal-button" type="button" data-signal="control" aria-pressed="false">control</button>
+          <button class="signal-button" type="button" data-signal="thesis" aria-pressed="false">thesis</button>
+          <button class="signal-button" type="button" data-signal="agent" aria-pressed="false">agents</button>
+          <button class="signal-button" type="button" data-signal="output" aria-pressed="false">output</button>
+        </div>
+        <div class="inspector-metric"><b>example</b><span id="signal-example">thermal fan, lifeguard armband, 3D printer safety</span></div>
+      </aside>
+    </section>
+
+    <div class="ticker" aria-label="Current threads"><div class="ticker-track">
+      <span>BUILD: robotics firmware</span><span>LEARN: embedded AI / security</span><span>OPERATE: GBrain + Hermes</span><span>PUBLISH: systems investigations</span><span>VERIFY: claims that reproduce</span>
+      <span>BUILD: robotics firmware</span><span>LEARN: embedded AI / security</span><span>OPERATE: GBrain + Hermes</span><span>PUBLISH: systems investigations</span><span>VERIFY: claims that reproduce</span>
+    </div></div>
+
 
     <section id="now">
       <div class="section-heading">
@@ -477,6 +608,27 @@
     }
     updateClock();
     setInterval(updateClock, 1000);
+
+    const signalData = {
+      signal: ['Physical signal → useful interface', 'The recurring pattern is sensing something real, noisy, or physical, then building enough software and interface around it that people can act.', 'thermal fan, lifeguard armband, 3D printer safety'],
+      control: ['Control loops under real constraints', 'Firmware, controls, and product behavior are where ideas meet latency, calibration, edge cases, manufacturing, and users.', 'voice car, smart fan, satellite attitude control'],
+      thesis: ['Cross-stack systems taste', 'The point is not breadth for its own sake. It is knowing enough across chip, firmware, robotics, AI, and product to see the seams.', 'RISC-V CPU, Tesla wireless systems, robotics work'],
+      agent: ['AI as recursive leverage', 'GBrain, Life OS, Hermes, and ClaimForge are cognitive infrastructure: tools for turning experience into memory, experiments, and verified work.', 'GBrain, Hermes, ClaimForge, Life OS'],
+      output: ['Artifacts over vague claims', 'The public surface should compound through demos, architecture diagrams, failure-mode notes, and systems investigations.', 'field notes, project writeups, public prototypes']
+    };
+    function selectSignal(key) {
+      const data = signalData[key] || signalData.signal;
+      document.getElementById('signal-title').textContent = data[0];
+      document.getElementById('signal-copy').textContent = data[1];
+      document.getElementById('signal-example').textContent = data[2];
+      document.querySelectorAll('[data-signal]').forEach(el => {
+        const active = el.dataset.signal === key;
+        el.classList.toggle('active', active);
+        el.setAttribute('aria-pressed', String(active));
+      });
+    }
+    document.querySelectorAll('[data-signal]').forEach(el => el.addEventListener('click', () => selectSignal(el.dataset.signal)));
+
   </script>
 </body>
 </html>
