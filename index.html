@@ -3,378 +3,480 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Miles Nash — Embodied Systems, AI, and Personal Infrastructure</title>
+  <title>Miles Nash — Hardware · Software · Systems</title>
   <meta name="description" content="Miles Nash is an embodied systems engineer building across hardware, firmware, autonomy, AI, and product constraints." />
-  <meta property="og:title" content="Miles Nash — Embodied Systems, AI, and Personal Infrastructure" />
-  <meta property="og:description" content="A public-safe, current-positioning prototype for Miles Nash: robotics firmware, embodied AI systems, GBrain/Life OS, and systems investigations." />
+  <meta property="og:title" content="Miles Nash — Hardware · Software · Systems" />
+  <meta property="og:description" content="A current, public-safe redesign inspired by milesnash.io: engineering notebook, project gallery, and systems-investigation field notes." />
   <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#08090a" />
+  <meta name="theme-color" content="#f7f5ef" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #08090a;
-      --panel: #0f1011;
-      --surface: rgba(255,255,255,0.035);
-      --surface-2: rgba(255,255,255,0.055);
-      --ink: #f7f8f8;
-      --text: #d0d6e0;
-      --muted: #a3a8b3;
-      --quiet: #7d838c;
-      --line: rgba(255,255,255,0.08);
-      --line-soft: rgba(255,255,255,0.05);
-      --accent: #7170ff;
-      --accent-2: #10b981;
-      --warn: #d9a441;
-      --rust: #e67d51;
-      --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      --sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --paper: #f7f5ef;
+      --paper-2: #fffdf8;
+      --paper-3: #f0ede4;
+      --grid: #e7e4da;
+      --grid-strong: #d4d0c4;
+      --ink: #111417;
+      --text: #242424;
+      --muted: #666a6f;
+      --quiet: #8a8f99;
+      --border: #c7c3b8;
+      --border-soft: #e8e0d8;
+      --rust: #9f4c2f;
+      --green: #3f6d58;
+      --blue: #315f7d;
+      --shadow: 0 2px 6px rgba(0,0,0,0.05);
+      --shadow-hover: 0 10px 28px rgba(0,0,0,0.10);
+      --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+      --serif: Georgia, "Times New Roman", serif;
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      background:
-        radial-gradient(circle at 20% 0%, rgba(113,112,255,0.16), transparent 32rem),
-        radial-gradient(circle at 86% 18%, rgba(16,185,129,0.09), transparent 26rem),
-        linear-gradient(180deg, #08090a 0%, #0b0c0e 48%, #070808 100%);
+      padding: 0;
+      font-family: var(--serif);
       color: var(--text);
-      font-family: var(--sans);
-      font-feature-settings: "cv01", "ss03";
-      line-height: 1.55;
-    }
-
-    a { color: inherit; text-decoration: none; }
-    a:hover { color: var(--ink); }
-    .noise {
-      pointer-events: none;
-      position: fixed;
-      inset: 0;
-      opacity: 0.35;
+      line-height: 1.58;
+      background: var(--paper);
       background-image:
-        linear-gradient(rgba(255,255,255,0.024) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.024) 1px, transparent 1px);
-      background-size: 44px 44px;
-      mask-image: linear-gradient(to bottom, black, transparent 72%);
+        linear-gradient(0deg, var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 32px 32px;
+      background-attachment: fixed;
     }
-    .wrap { width: min(1180px, calc(100vw - 40px)); margin: 0 auto; position: relative; }
 
-    header {
+    a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+    a:hover { color: #555; }
+
+    .header {
       position: sticky;
       top: 0;
       z-index: 20;
-      backdrop-filter: blur(18px);
-      background: rgba(8,9,10,0.74);
-      border-bottom: 1px solid var(--line-soft);
-    }
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 68px;
-      gap: 20px;
-    }
-    .brand { display: flex; align-items: center; gap: 12px; color: var(--ink); font-weight: 510; letter-spacing: -0.02em; }
-    .mark {
-      width: 30px; height: 30px; border-radius: 9px;
-      border: 1px solid var(--line);
-      display: grid; place-items: center;
-      background: linear-gradient(135deg, rgba(113,112,255,0.26), rgba(255,255,255,0.03));
-      box-shadow: inset 0 0 18px rgba(113,112,255,0.16);
-      font-family: var(--mono); font-size: 12px;
-    }
-    nav { display: flex; align-items: center; gap: 18px; color: var(--muted); font-size: 13px; font-weight: 510; }
-    .pill {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.025);
-      border-radius: 999px;
-      padding: 8px 12px;
-      color: var(--text);
-    }
-
-    .hero { padding: 96px 0 48px; }
-    .kicker {
+      backdrop-filter: blur(5px);
+      background: color-mix(in oklab, var(--paper) 91%, transparent);
+      border-bottom: 1px solid var(--border);
+      padding: 7.5px 25px;
       font-family: var(--mono);
-      color: var(--accent-2);
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 22px;
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-    .dot { width: 7px; height: 7px; border-radius: 99px; background: var(--accent-2); box-shadow: 0 0 16px rgba(16,185,129,0.75); }
-    h1 {
-      margin: 0;
-      max-width: 950px;
-      color: var(--ink);
-      font-size: clamp(42px, 8vw, 86px);
-      line-height: 0.95;
-      letter-spacing: -0.055em;
-      font-weight: 510;
-      text-wrap: balance;
-    }
-    .lede {
-      margin: 28px 0 0;
-      max-width: 760px;
+      letter-spacing: 0.02em;
+      font-size: 13.75px;
       color: var(--muted);
-      font-size: clamp(18px, 2vw, 22px);
-      line-height: 1.55;
-      letter-spacing: -0.015em;
-    }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
-    .button {
-      min-height: 44px;
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      padding: 10px 16px;
-      font-size: 14px;
-      font-weight: 510;
-      background: rgba(255,255,255,0.025);
-      color: var(--ink);
+      gap: 15px;
+      justify-content: space-between;
     }
-    .button.primary { background: #5e6ad2; border-color: rgba(255,255,255,0.12); color: white; box-shadow: 0 14px 44px rgba(94,106,210,0.28); }
-    .button:hover { transform: translateY(-1px); transition: transform 160ms ease, background 160ms ease; background: rgba(255,255,255,0.055); }
-    .button.primary:hover { background: #7170ff; }
 
-    .mission-grid {
-      margin-top: 54px;
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 18px;
-      align-items: stretch;
+    .brand-line { display: flex; gap: 10px; align-items: center; min-width: 0; }
+    .name {
+      font-weight: 600;
+      font-size: 17.19px;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      text-decoration: none;
+      white-space: nowrap;
     }
-    .panel {
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.052), rgba(255,255,255,0.026));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 24px 80px rgba(0,0,0,0.32);
+    .tagline {
+      font-size: 17.19px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .telemetry { display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+    .time-display { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 1.05em; font-weight: 600; color: #333; }
+    .time-display .label { color: #666; }
+
+    .main-container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 2.15em 2em 4.5em;
+    }
+
+    .top-nav {
+      display: flex;
+      gap: 7.5px;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 1.8rem;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+    .chip-link, .mini-chip {
+      border: 1px solid var(--border);
+      background: color-mix(in oklab, var(--paper) 76%, white);
+      padding: 5px 11px;
+      border-radius: 7.5px;
+      font-weight: 500;
+      color: inherit;
+      text-decoration: none;
+      transition: all 0.18s ease;
+    }
+    .chip-link:hover, .mini-chip:hover { background: var(--grid); border-color: var(--quiet); color: var(--ink); }
+
+    .hero-card {
+      position: relative;
+      background: color-mix(in oklab, var(--paper-2) 88%, transparent);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      padding: clamp(1.2rem, 3.5vw, 2rem);
       overflow: hidden;
     }
-    .panel-inner { padding: 24px; }
-    .system-card { min-height: 430px; position: relative; }
-    .system-map {
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(circle at 26% 28%, rgba(113,112,255,0.28), transparent 16rem),
-        radial-gradient(circle at 73% 72%, rgba(16,185,129,0.14), transparent 14rem);
-    }
-    .node {
+    .hero-card::before {
+      content: "";
       position: absolute;
-      border: 1px solid var(--line);
-      background: rgba(15,16,17,0.86);
-      border-radius: 14px;
-      padding: 12px 14px;
-      min-width: 138px;
-      box-shadow: 0 18px 40px rgba(0,0,0,0.28);
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(159,76,47,0.10), transparent 28%),
+        linear-gradient(180deg, rgba(255,255,255,0.45), transparent 34%);
+      mix-blend-mode: multiply;
     }
-    .node strong { display: block; color: var(--ink); font-size: 14px; letter-spacing: -0.01em; }
-    .node span { display: block; margin-top: 3px; color: var(--quiet); font-family: var(--mono); font-size: 11px; }
-    .node.center { left: 50%; top: 48%; transform: translate(-50%, -50%); min-width: 210px; border-color: rgba(113,112,255,0.45); background: rgba(20,21,28,0.94); }
-    .node.n1 { left: 7%; top: 14%; }
-    .node.n2 { right: 8%; top: 16%; }
-    .node.n3 { left: 11%; bottom: 16%; }
-    .node.n4 { right: 9%; bottom: 14%; }
-    .edge { position: absolute; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent); transform-origin: left center; }
-    .edge.e1 { width: 33%; left: 24%; top: 32%; transform: rotate(16deg); }
-    .edge.e2 { width: 33%; right: 23%; top: 34%; transform: rotate(-16deg); }
-    .edge.e3 { width: 34%; left: 24%; bottom: 31%; transform: rotate(-17deg); }
-    .edge.e4 { width: 34%; right: 22%; bottom: 31%; transform: rotate(17deg); }
+    .hero-layout { position: relative; display: grid; grid-template-columns: 220px 1fr; gap: 1.6rem; align-items: start; }
+    .hero-aside { display: grid; gap: 0.85rem; }
+    .portrait {
+      width: 210px;
+      height: 158px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid var(--border-soft);
+      background: var(--paper-3);
+      filter: saturate(0.95) contrast(1.02);
+    }
+    .eyebrow { font-family: var(--mono); font-size: 12px; color: var(--quiet); letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 0.65rem; }
+    h1, h2, h3 { font-family: var(--serif); font-weight: normal; color: var(--ink); }
+    h1 { margin: 0; font-size: clamp(2.05rem, 5.2vw, 3.72rem); line-height: 1.01; letter-spacing: -0.041em; max-width: 700px; text-wrap: balance; }
+    .subtitle { margin: 1rem 0 0; max-width: 670px; font-size: 1.08rem; color: #333; }
+    .hero-links { margin-top: 1.25rem; display: flex; flex-wrap: wrap; gap: 0.65rem 1rem; align-items: center; }
+    .hero-links a { font-family: var(--mono); font-size: 12.5px; }
 
-    .console h2 { color: var(--ink); margin: 0 0 12px; font-size: 24px; line-height: 1.1; letter-spacing: -0.03em; font-weight: 510; }
-    .console p { color: var(--muted); margin: 0; }
-    .readout { margin-top: 24px; display: grid; gap: 10px; }
-    .row { display: grid; grid-template-columns: 110px 1fr; gap: 12px; padding: 12px; border: 1px solid var(--line-soft); border-radius: 10px; background: rgba(255,255,255,0.02); }
-    .row b { font-family: var(--mono); font-size: 11px; color: var(--quiet); text-transform: uppercase; font-weight: 500; }
-    .row span { color: var(--text); font-size: 14px; }
+    .field-note {
+      display: grid;
+      grid-template-columns: 145px 1fr;
+      margin-top: 1rem;
+      border: 1px solid var(--border-soft);
+      background: rgba(255,255,255,0.48);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .field-note b {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--paper-3);
+      border-right: 1px solid var(--border-soft);
+      padding: 0.85rem;
+      font-weight: 600;
+    }
+    .field-note span { padding: 0.78rem 0.9rem; color: #333; }
 
-    section { padding: 64px 0; }
-    .section-head { display: flex; justify-content: space-between; gap: 28px; align-items: end; margin-bottom: 22px; }
-    .eyebrow { color: var(--quiet); font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
-    h2 { margin: 8px 0 0; color: var(--ink); font-size: clamp(30px, 4vw, 48px); line-height: 1; letter-spacing: -0.045em; font-weight: 510; }
-    .section-copy { max-width: 520px; color: var(--muted); margin: 0; }
-    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    .card { border: 1px solid var(--line); background: var(--surface); border-radius: 16px; padding: 20px; min-height: 210px; }
-    .card:hover { background: var(--surface-2); border-color: rgba(255,255,255,0.13); }
-    .card .num { font-family: var(--mono); color: var(--accent); font-size: 12px; margin-bottom: 34px; display: block; }
-    .card h3 { margin: 0; color: var(--ink); font-size: 20px; letter-spacing: -0.025em; line-height: 1.15; font-weight: 590; }
-    .card p { margin: 12px 0 0; color: var(--muted); font-size: 15px; }
-    .card ul { margin: 14px 0 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
+    .aside-meta {
+      border: 1px solid var(--border-soft);
+      background: rgba(255,255,255,0.55);
+      border-radius: 8px;
+      padding: 0.85rem;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .aside-meta b { display: block; color: var(--ink); font-size: 12px; margin-bottom: 0.35rem; letter-spacing: 0.04em; text-transform: uppercase; }
+    .aside-meta span { display: block; border-top: 1px solid var(--border-soft); padding-top: 0.45rem; margin-top: 0.45rem; }
 
-    .timeline { border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,0.025); overflow: hidden; }
-    .step { display: grid; grid-template-columns: 150px 1fr 0.8fr; gap: 20px; padding: 20px; border-bottom: 1px solid var(--line-soft); }
-    .step:last-child { border-bottom: 0; }
-    .step time { font-family: var(--mono); color: var(--quiet); font-size: 12px; }
-    .step h3 { margin: 0; color: var(--ink); font-size: 18px; font-weight: 590; letter-spacing: -0.02em; }
-    .step p { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
-    .tag { display: inline-flex; width: fit-content; align-items: center; border: 1px solid var(--line-soft); border-radius: 99px; padding: 5px 8px; font-family: var(--mono); color: var(--quiet); font-size: 11px; background: rgba(255,255,255,0.02); }
+    section { margin-top: 3rem; }
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 1.15rem;
+    }
+    h2 { margin: 0; font-size: 1.72rem; line-height: 1.1; }
+    .section-heading p { margin: 0; max-width: 420px; color: var(--muted); font-size: 0.98rem; }
 
-    .split { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 18px; align-items: start; }
-    .quote { padding: 28px; border-radius: 18px; border: 1px solid rgba(113,112,255,0.28); background: linear-gradient(180deg, rgba(113,112,255,0.12), rgba(255,255,255,0.025)); }
-    .quote p { margin: 0; color: var(--ink); font-size: clamp(24px, 3.4vw, 38px); line-height: 1.08; letter-spacing: -0.045em; }
-    .quote small { display: block; margin-top: 18px; color: var(--muted); }
-    .links { display: grid; gap: 10px; }
-    .link-card { display: flex; justify-content: space-between; gap: 16px; align-items: center; border: 1px solid var(--line); border-radius: 14px; padding: 16px; background: rgba(255,255,255,0.025); }
-    .link-card strong { color: var(--ink); display: block; font-size: 15px; }
-    .link-card span { display: block; color: var(--muted); font-size: 13px; margin-top: 3px; }
-    .arrow { color: var(--quiet); }
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+    .plain-list h2, .plain-list h3 { margin-top: 0; margin-bottom: 1rem; }
+    .plain-list p { margin: 0 0 0.75rem 0; line-height: 1.4; }
+    .plain-list .muted { color: var(--muted); }
+    .timeline-list p { position: relative; padding-left: 1rem; border-left: 1px solid var(--border-soft); }
+    .timeline-list p::before { content: ""; position: absolute; left: -4px; top: 0.47em; width: 7px; height: 7px; border-radius: 50%; background: var(--paper); border: 1px solid var(--border); }
+    .timeline-list strong { font-weight: normal; color: var(--ink); }
 
-    footer { padding: 58px 0 80px; color: var(--quiet); border-top: 1px solid var(--line-soft); }
-    .footer-grid { display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: start; }
-    .contract { max-width: 680px; font-size: 14px; }
-    .mono { font-family: var(--mono); }
+    .thesis-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.55);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .thesis-cell { padding: 1rem; border-right: 1px solid var(--border-soft); min-height: 135px; }
+    .thesis-cell:last-child { border-right: 0; }
+    .thesis-cell b { display:block; font-family: var(--mono); font-size: 11px; color: var(--quiet); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1.5rem; }
+    .thesis-cell span { display:block; color: var(--ink); line-height: 1.35; }
 
-    @media (max-width: 860px) {
-      nav { display: none; }
-      .hero { padding-top: 72px; }
-      .mission-grid, .cards, .split { grid-template-columns: 1fr; }
-      .system-card { min-height: 360px; }
-      .step { grid-template-columns: 1fr; gap: 8px; }
-      .section-head { display: block; }
-      .section-copy { margin-top: 14px; }
-      .node { min-width: 120px; padding: 10px; }
-      .node.center { min-width: 170px; }
+    .projects-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.25rem;
+    }
+    .project-card {
+      background: white;
+      border: 1px solid var(--border-soft);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: all 0.24s ease;
+      box-shadow: var(--shadow);
+      min-height: 100%;
+    }
+    .project-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: #d0c8c0; }
+    .project-link { display: block; color: var(--ink); text-decoration: none; height: 100%; }
+    .project-image {
+      width: 100%;
+      height: 166px;
+      object-fit: cover;
+      object-position: center;
+      background: #f8f6f4;
+      border-bottom: 1px solid var(--border-soft);
+      display: block;
+      filter: saturate(0.88) contrast(0.98);
+    }
+    .project-card:nth-child(3) .project-image { filter: saturate(0.72) contrast(0.92); }
+    .project-card:nth-child(5) .project-image { object-position: center 38%; filter: saturate(0.78) contrast(0.96); }
+    .project-card:nth-child(6) .project-image { object-position: top center; filter: saturate(0.72) contrast(0.95); }
+    .project-content { padding: 1rem; }
+    .project-title { font-size: 1.02em; margin: 0; color: var(--ink); line-height: 1.25; }
+    .project-description { margin: 0.55rem 0 0; font-size: 0.92rem; color: var(--muted); line-height: 1.42; }
+    .project-meta { margin-top: 0.8rem; font-family: var(--mono); font-size: 10.75px; color: var(--quiet); text-transform: uppercase; letter-spacing: 0.04em; }
+
+    .investigation-board {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 1.5rem;
+    }
+    .note-card {
+      background: rgba(255,255,255,0.68);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.2rem;
+      box-shadow: var(--shadow);
+    }
+    .note-card h3 { margin: 0 0 0.65rem; font-size: 1.18rem; }
+    .note-card p { margin: 0 0 0.75rem; color: #333; }
+    .note-card ul { margin: 0.75rem 0 0; padding-left: 1.25rem; color: var(--muted); }
+    .ledger { display: grid; gap: 0.75rem; }
+    .ledger-row { display: grid; grid-template-columns: 108px 1fr; gap: 0.9rem; border-bottom: 1px solid var(--border-soft); padding-bottom: 0.7rem; }
+    .ledger-row:last-child { border-bottom: 0; padding-bottom: 0; }
+    .ledger-row time { font-family: var(--mono); font-size: 11px; color: var(--quiet); }
+    .ledger-row span { line-height: 1.35; }
+
+    .public-contract {
+      border: 1px solid var(--border);
+      background: #1b1b18;
+      color: #eee8dc;
+      border-radius: 10px;
+      padding: 1.25rem 1.35rem;
+      font-size: 0.98rem;
+      box-shadow: var(--shadow-hover);
+    }
+    .public-contract b { font-family: var(--mono); font-size: 11px; color: #d9b38c; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 0.4rem; }
+    .public-contract a { color: #fff; }
+
+    footer {
+      margin-top: 4rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    @media (max-width: 820px) {
+      .header { padding: 8px 14px; align-items: flex-start; }
+      .tagline, .telemetry { display: none; }
+      .main-container { padding: 1.25em 1em 3em; }
+      .top-nav { justify-content: flex-start; overflow-x: auto; padding-bottom: 2px; }
+      .hero-layout, .two-column, .investigation-board { grid-template-columns: 1fr; gap: 1.25rem; }
+      .portrait { width: 100%; height: 220px; }
+      .thesis-strip { grid-template-columns: 1fr; }
+      .thesis-cell { border-right: 0; border-bottom: 1px solid var(--border-soft); min-height: auto; }
+      .thesis-cell:last-child { border-bottom: 0; }
+      .projects-gallery { grid-template-columns: 1fr; }
+      .section-heading { display: block; }
+      .section-heading p { margin-top: 0.6rem; }
+      .field-note { grid-template-columns: 1fr; }
+      .field-note b { border-right: 0; border-bottom: 1px solid var(--border-soft); }
+      footer { display: block; }
+    }
+
+    @media (min-width: 821px) and (max-width: 1040px) {
+      .projects-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      .button:hover { transform: none; }
+      .project-card, .chip-link, .mini-chip { transition: none; }
+      .project-card:hover { transform: none; }
     }
   </style>
 </head>
 <body>
-  <div class="noise" aria-hidden="true"></div>
-  <header>
-    <div class="wrap nav">
-      <a class="brand" href="#top" aria-label="Miles Nash home"><span class="mark">MN</span><span>Miles Nash</span></a>
-      <nav aria-label="Primary navigation">
-        <a href="#terrain">Terrain</a>
-        <a href="#work">Work</a>
-        <a href="#investigations">Investigations</a>
-        <a href="#connect" class="pill">Connect</a>
-      </nav>
+  <header class="header">
+    <div class="brand-line">
+      <a class="name" href="#top">MILES NASH</a>
+      <span class="tagline">Hardware · Software · Systems</span>
+    </div>
+    <div class="telemetry" aria-label="UTC clock">
+      <div class="time-display"><span class="label">UTC</span><span class="value" id="time-display">--:--:--</span></div>
     </div>
   </header>
 
-  <main id="top">
-    <section class="hero">
-      <div class="wrap">
-        <div class="kicker"><span class="dot"></span><span>Current public-safe prototype · 2026</span></div>
-        <h1>Embodied systems engineer building across hardware, firmware, autonomy, AI, and product constraints.</h1>
-        <p class="lede">I study systems by building them: sensors, circuits, control loops, manufacturing constraints, AI interfaces, and the teams that make them real.</p>
-        <div class="hero-actions">
-          <a class="button primary" href="#work">See the arc</a>
-          <a class="button" href="#investigations">Systems investigations</a>
-          <a class="button" href="https://github.com/miles-nash" target="_blank" rel="noreferrer">GitHub</a>
-        </div>
+  <main id="top" class="main-container">
+    <nav class="top-nav" aria-label="Page sections">
+      <a class="chip-link" href="#now">Now</a>
+      <a class="chip-link" href="#projects">Projects</a>
+      <a class="chip-link" href="#investigations">Investigations</a>
+      <a class="chip-link" href="#connect">Connect</a>
+    </nav>
 
-        <div class="mission-grid" aria-label="Current systems map">
-          <div class="panel system-card">
-            <div class="system-map" aria-hidden="true">
-              <div class="edge e1"></div><div class="edge e2"></div><div class="edge e3"></div><div class="edge e4"></div>
-              <div class="node center"><strong>Miles Nash</strong><span>embodied systems + recursive leverage</span></div>
-              <div class="node n1"><strong>Physical signal</strong><span>sensors · circuits · uncertainty</span></div>
-              <div class="node n2"><strong>Control loop</strong><span>firmware · robotics · autonomy</span></div>
-              <div class="node n3"><strong>AI interface</strong><span>agents · GBrain · verification</span></div>
-              <div class="node n4"><strong>Team/product</strong><span>constraints · demos · shipped artifacts</span></div>
-            </div>
+    <section class="hero-card" aria-labelledby="hero-title">
+      <div class="hero-layout">
+        <div class="hero-aside">
+          <img class="portrait" src="https://www.milesnash.io/photo2.jpg" alt="Miles Nash" />
+          <div class="aside-meta"><b>current vector</b>robotics firmware / embedded systems<span>AI systems as recursive leverage</span><span>public artifacts over vague claims</span></div>
+        </div>
+        <div>
+          <p class="eyebrow">Current thesis / public-safe draft</p>
+          <h1 id="hero-title">Embodied systems engineer building across hardware, firmware, autonomy, AI, and product constraints.</h1>
+          <p class="subtitle">I study systems by building them: sensors, circuits, control loops, manufacturing constraints, AI interfaces, and the teams that make them real.</p>
+          <div class="hero-links">
+            <a href="https://github.com/miles-nash" target="_blank" rel="noreferrer">GitHub</a>
+            <span>·</span>
+            <a href="https://www.linkedin.com/in/miles-nash" target="_blank" rel="noreferrer">LinkedIn</a>
+            <span>·</span>
+            <a href="https://x.com/milesnash_" target="_blank" rel="noreferrer">X / Twitter</a>
+            <span>·</span>
+            <a href="https://www.milesnash.io/" target="_blank" rel="noreferrer">Current site</a>
           </div>
-          <aside class="panel console">
-            <div class="panel-inner">
-              <div class="eyebrow">Public thesis</div>
-              <h2>Make messy systems intelligible, controllable, and useful.</h2>
-              <p>This version moves the site away from “student portfolio” and toward the through-line showing up now: robotics firmware, embodied AI, personal infrastructure, and verification loops.</p>
-              <div class="readout">
-                <div class="row"><b>Now</b><span>Robotics firmware / embedded systems, plus AI systems as leverage.</span></div>
-                <div class="row"><b>Pattern</b><span>physical signal → interpretation → actuation/interface → team/product constraint.</span></div>
-                <div class="row"><b>Edge</b><span>Cross-stack architecture: chip, firmware, controls, AI, and people.</span></div>
-                <div class="row"><b>Boundary</b><span>Public-safe synthesis; no private notes, raw contact details, or employer-confidential specifics.</span></div>
-              </div>
-            </div>
-          </aside>
+          <div class="field-note"><b>shift</b><span>From “student portfolio with many projects” to “cross-stack builder preparing for embodied AI systems.”</span></div>
         </div>
       </div>
     </section>
 
-    <section id="terrain">
-      <div class="wrap">
-        <div class="section-head">
-          <div><div class="eyebrow">Research terrain</div><h2>What I keep circling.</h2></div>
-          <p class="section-copy">The projects differ, but the shape repeats: sense the world, model constraints, close the loop, then make the result legible enough for people to trust or improve.</p>
+    <section id="now">
+      <div class="section-heading">
+        <h2>What I’m up to now</h2>
+        <p>A compact status board, inspired by the current site’s timeline / reading / learning block.</p>
+      </div>
+      <div class="two-column">
+        <div class="plain-list timeline-list">
+          <h2>Career Timeline</h2>
+          <p><strong>Founded</strong> High-School Robotics Club</p>
+          <p><strong>Lockheed Martin</strong>: Electrical Engineering</p>
+          <p><strong>Lockheed Martin</strong>: Manufacturing</p>
+          <p><strong>Lockheed Martin</strong>: Guidance Software</p>
+          <p><strong>Hypernova Space</strong>: Engine Design (part time)</p>
+          <p><strong>Tesla</strong>: Technical Program Management</p>
+          <p><strong>Microsoft</strong>: Technical Program Management</p>
+          <p><strong>Matic Robotics</strong>: Firmware Systems Engineer</p>
         </div>
-        <div class="cards">
-          <article class="card"><span class="num">01 / embodied intelligence</span><h3>Robotics, perception, autonomy</h3><p>Small systems that reveal the hard parts: latency, noise, calibration, control boundaries, and human-facing behavior.</p></article>
-          <article class="card"><span class="num">02 / low-level to high-level</span><h3>Silicon → firmware → product</h3><p>Chip and embedded constraints as a way to reason about the whole stack, not as résumé decoration.</p></article>
-          <article class="card"><span class="num">03 / recursive infrastructure</span><h3>GBrain, Life OS, agents</h3><p>Personal AI infrastructure for turning experience into memory, experiments, work queues, and better future decisions.</p></article>
-          <article class="card"><span class="num">04 / verification</span><h3>Claims that reproduce</h3><p>ClaimForge-style workflows: agents that don’t just generate outputs, but help reproduce scientific and technical claims.</p></article>
-          <article class="card"><span class="num">05 / systems leadership</span><h3>Teams under constraints</h3><p>Turning ambiguous goals into prototypes, reviews, tradeoffs, schedules, and shippable artifacts.</p></article>
-          <article class="card"><span class="num">06 / public synthesis</span><h3>Systems investigations</h3><p>Publish the architecture, bottleneck, failure mode, and retained model—not just a project gallery.</p></article>
+        <div class="plain-list">
+          <h2>Reading/Watching</h2>
+          <p>Bret Victor, <em>Inventing on Principle</em></p>
+          <p>Stranger in a Strange Land</p>
+          <p>Southpark</p>
+          <h2 style="margin-top:1.7rem">Learning</h2>
+          <p>Robotics, embedded AI, computer security, verification loops</p>
+          <p class="muted">Next layer: public systems investigations that turn projects into reusable architectural models.</p>
         </div>
       </div>
     </section>
 
-    <section id="work">
-      <div class="wrap">
-        <div class="section-head">
-          <div><div class="eyebrow">Evidence arc</div><h2>From maker projects to embodied AI systems.</h2></div>
-          <p class="section-copy">A compressed map of public-facing work and the interpretation it now supports.</p>
-        </div>
-        <div class="timeline">
-          <div class="step"><time>2018–2019</time><div><h3>Maker safety, sensing, interface layer</h3><p>3D printer safety, OctoPrint/Alexa interfaces, wearable lifeguard sensors, weather displays, hovercraft.</p></div><span class="tag">sensors → alerts → control</span></div>
-          <div class="step"><time>2021–2022</time><div><h3>Robotics, controls, team engineering</h3><p>NASA HUNCH prototype work, EECS16B voice-controlled car, Berkeley project trail.</p></div><span class="tag">prototype → review → demo</span></div>
-          <div class="step"><time>2023–2025</time><div><h3>Product hardware, chips, embedded autonomy</h3><p>Tesla wireless/key systems, RISC‑V CPU and neural classifier, thermal smart fan with MQTT and local control.</p></div><span class="tag">architecture → constraints</span></div>
-          <div class="step"><time>2026 →</time><div><h3>Personal AI infrastructure and verification loops</h3><p>GBrain/Life OS, Hermes workflows, ClaimForge, project operating layers, and AI-assisted systems research.</p></div><span class="tag">memory → agents → leverage</span></div>
-        </div>
+    <section aria-label="Public thesis strip">
+      <div class="thesis-strip">
+        <div class="thesis-cell"><b>signal</b><span>Physical-world data: sensors, circuits, noise, latency, calibration.</span></div>
+        <div class="thesis-cell"><b>loop</b><span>Firmware, controls, autonomy, and product behavior under constraints.</span></div>
+        <div class="thesis-cell"><b>leverage</b><span>GBrain, Life OS, Hermes, agents, and verifiable workflows.</span></div>
+        <div class="thesis-cell"><b>output</b><span>Working artifacts, teams, notes, and systems that other people can inspect.</span></div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="section-heading">
+        <h2>Projects</h2>
+        <p>The project grid keeps the current site’s strongest UI move: real engineering images as evidence, not decoration.</p>
+      </div>
+      <div class="projects-gallery">
+        <article class="project-card"><a class="project-link" href="https://www.milesnash.io/model-y.html" target="_blank" rel="noreferrer"><img class="project-image" src="https://www.milesnash.io/modelY.jpg" alt="Tesla Model Y Wireless Entry System"><div class="project-content"><h3 class="project-title">Tesla Model Y Wireless Entry System</h3><p class="project-description">Wireless hardware, production constraints, and cross-functional system bring-up.</p><div class="project-meta">hardware · product · team</div></div></a></article>
+        <article class="project-card"><a class="project-link" href="https://shop.tesla.com/product/cybertruck-metal-key-card" target="_blank" rel="noreferrer"><img class="project-image" src="https://www.milesnash.io/ctcard.avif" alt="Tesla Cybertruck Metal Key Card"><div class="project-content"><h3 class="project-title">Cybertruck Metal Key Card</h3><p class="project-description">A small public artifact from a larger product-hardware system.</p><div class="project-meta">wireless · manufacturing</div></div></a></article>
+        <article class="project-card"><a class="project-link" href="https://www.milesnash.io/risc-v.html" target="_blank" rel="noreferrer"><img class="project-image" src="https://www.milesnash.io/riscv.png" alt="RISC-V CPU with Cache"><div class="project-content"><h3 class="project-title">RISC‑V CPU with Cache</h3><p class="project-description">Chip-level architecture, cache behavior, verification, and PPA tradeoffs.</p><div class="project-meta">silicon · architecture</div></div></a></article>
+        <article class="project-card"><a class="project-link" href="https://www.milesnash.io/iot-fan.html" target="_blank" rel="noreferrer"><img class="project-image" src="https://www.milesnash.io/smartfan.png" alt="Thermal Imaging Smart Fan"><div class="project-content"><h3 class="project-title">Thermal Imaging Smart Fan</h3><p class="project-description">Thermal sensing, local control, MQTT telemetry, and human comfort.</p><div class="project-meta">embedded · control</div></div></a></article>
+        <article class="project-card"><a class="project-link" href="https://www.milesnash.io/voice-car.html" target="_blank" rel="noreferrer"><img class="project-image" src="https://www.milesnash.io/voicecontrolledcar.png" alt="Voice Controlled Car"><div class="project-content"><h3 class="project-title">Voice Controlled Car</h3><p class="project-description">Audio signal processing into classification and physical motion.</p><div class="project-meta">robotics · signal</div></div></a></article>
+        <article class="project-card"><a class="project-link" href="https://github.com/miles-nash/claimforge" target="_blank" rel="noreferrer"><img class="project-image" src="https://www.milesnash.io/peoplesprompt.png" alt="People's Prompt AI Zine"><div class="project-content"><h3 class="project-title">ClaimForge / AI Workflows</h3><p class="project-description">Agentic systems that move from text generation toward verifiable claims.</p><div class="project-meta">AI · verification</div></div></a></article>
       </div>
     </section>
 
     <section id="investigations">
-      <div class="wrap split">
-        <div class="quote">
-          <p>Not a portfolio of things I touched. A field notebook for systems I’m learning to steer.</p>
-          <small>Draft site posture: direct, inspectable, and built from evidence.</small>
+      <div class="section-heading">
+        <h2>Systems investigations</h2>
+        <p>The next public leap is not more project cards; it is better synthesis.</p>
+      </div>
+      <div class="investigation-board">
+        <div class="note-card">
+          <h3>Field-note format</h3>
+          <p>Each investigation should answer: what was built, what constraints mattered, what failed, what model was retained, and what measurement would change the design.</p>
+          <ul>
+            <li>Tiny expressive rover: planning boundary between firmware, autonomy, and LLMs.</li>
+            <li>Thermal smart fan: sensing uncertainty and local-control comfort metrics.</li>
+            <li>RISC‑V → robotics: why low-level constraints improve embodied-AI taste.</li>
+          </ul>
         </div>
-        <div>
-          <div class="section-head" style="margin-bottom:14px; display:block;">
-            <div class="eyebrow">Next public artifacts</div>
-            <h2 style="font-size:34px;">Systems investigations.</h2>
-          </div>
-          <div class="cards" style="grid-template-columns: 1fr;">
-            <article class="card"><span class="num">Candidate 01</span><h3>Tiny expressive rover</h3><p>Firmware, perception, control, autonomy, LLM planning boundaries, and measurable failure modes.</p></article>
-            <article class="card"><span class="num">Candidate 02</span><h3>Thermal smart fan postmortem</h3><p>Sensing uncertainty, local control, MQTT telemetry, and a human comfort metric.</p></article>
-            <article class="card"><span class="num">Candidate 03</span><h3>RISC‑V to robotics note</h3><p>What chip-level constraints teach about embodied AI architectures.</p></article>
-          </div>
+        <div class="note-card ledger">
+          <div class="ledger-row"><time>now</time><span>Robotics firmware / embedded systems plus AI systems as leverage.</span></div>
+          <div class="ledger-row"><time>pattern</time><span>Physical signal → interpretation → actuation/interface → team/product constraint.</span></div>
+          <div class="ledger-row"><time>edge</time><span>Cross-stack architecture: chip, firmware, controls, AI, and people.</span></div>
+          <div class="ledger-row"><time>boundary</time><span>Public-safe synthesis; no private notes, raw contact details, or employer-confidential specifics.</span></div>
         </div>
       </div>
     </section>
 
     <section id="connect">
-      <div class="wrap">
-        <div class="section-head">
-          <div><div class="eyebrow">Public routes</div><h2>Follow the work.</h2></div>
-          <p class="section-copy">This is a non-production redesign prototype. Links point to public surfaces; private GBrain/Life OS material stays private.</p>
-        </div>
-        <div class="links">
-          <a class="link-card" href="https://github.com/miles-nash" target="_blank" rel="noreferrer"><span><strong>GitHub</strong><span>Public repos and experiments.</span></span><span class="arrow">↗</span></a>
-          <a class="link-card" href="https://www.milesnash.io/" target="_blank" rel="noreferrer"><span><strong>Current production site</strong><span>The existing portfolio this prototype is intended to supersede.</span></span><span class="arrow">↗</span></a>
-          <a class="link-card" href="https://www.linkedin.com/in/miles-nash" target="_blank" rel="noreferrer"><span><strong>LinkedIn</strong><span>Professional surface.</span></span><span class="arrow">↗</span></a>
-          <a class="link-card" href="https://x.com/milesnash_" target="_blank" rel="noreferrer"><span><strong>X / Twitter</strong><span>Short-form public thinking.</span></span><span class="arrow">↗</span></a>
-        </div>
+      <div class="public-contract">
+        <b>public-safe contract</b>
+        This page summarizes public work and current positioning. It intentionally withholds raw private notes, direct personal contact details, and employer-confidential specifics. GBrain is referenced as a personal knowledge system, not exposed as data. <a href="https://www.milesnash.io/" target="_blank" rel="noreferrer">Compare with current production site.</a>
       </div>
     </section>
+
+    <footer>
+      <span>Miles Nash · Hardware · Software · Systems</span>
+      <span>non-prod prototype</span>
+    </footer>
   </main>
 
-  <footer>
-    <div class="wrap footer-grid">
-      <div class="contract"><strong style="color:var(--text)">Public-safe contract:</strong> this page summarizes public work and current positioning. It intentionally withholds raw private notes, direct personal contact details, and employer-confidential specifics. GBrain is referenced as a personal knowledge system, not exposed as data.</div>
-      <div class="mono">Miles Nash · prototype</div>
-    </div>
-  </footer>
+  <script>
+    function updateClock() {
+      const el = document.getElementById('time-display');
+      if (!el) return;
+      const now = new Date();
+      el.textContent = now.toISOString().slice(11, 19);
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
 </body>
 </html>
